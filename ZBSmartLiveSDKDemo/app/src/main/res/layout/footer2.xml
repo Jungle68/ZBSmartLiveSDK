@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                     android:id="@+id/load_layout"
+                                     android:layout_width="match_parent"
+                                     android:layout_height="wrap_content"
+                                     android:layout_marginLeft="-10px"
+                                     android:gravity="left|center_vertical"
+                                     android:orientation="horizontal"
+                                     android:paddingBottom="22px"
+                                     android:paddingTop="22px">
+
+
+    <TextView
+        android:id="@+id/more_data_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="加 载"
+       />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+</com.zhy.autolayout.AutoLinearLayout>
