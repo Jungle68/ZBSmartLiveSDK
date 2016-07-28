@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/background_floating_material_dark"
+    >
+
+    <com.zhiyicx.zhibosdk.widget.ZBAspectFrameLayout
+        android:id="@+id/cameraPreview_afl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+
+        <android.opengl.GLSurfaceView
+            android:id="@+id/cameraPreview_surfaceView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"/>
+    </com.zhiyicx.zhibosdk.widget.ZBAspectFrameLayout>
+    <Button
+        android:id="@+id/bt_start"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/holo_blue_bright"
+        android:text="开始推流"
+        android:textColor="@android:color/white"
+        android:layout_height="48dp"/>
+</RelativeLayout>
