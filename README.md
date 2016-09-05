@@ -41,6 +41,7 @@ SDK 提供了如下类(协议)和方法,点击类目查询详情
 > 
 > [ZBVideoView\ZBTextureView\ZBMediaPlayer]() 播放器核心(播放在线回放视频和直播)
 > 
+> [ZBInitConfigManager]() 配置信息管理类
 
 
 ## 快速集成
@@ -58,7 +59,7 @@ buildscript {
     }
 }
 dependencies {
-     compile "io.reactivex:rxandroid:1.1.0"
+    compile "io.reactivex:rxandroid:1.1.0"
     compile "io.reactivex:rxjava:1.1.0"
     compile "com.squareup.retrofit2:converter-gson:2.0.0-beta4"
     compile "com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4"
@@ -121,7 +122,14 @@ ZBSmartLiveSDK.init(ApplicationContext);
 Android端需要在<font style="color:red">拿到票据```ticket```后调用以下代码进行用户认证后，才可以使用智播的功能</font>
 
 ```java
-  ZBInitConfigManager.vertifyToken(String ticket);ticket票据由直播云服务器提供给第三方服务器;
+  ZBInitConfigManager.vertifyToken(context,String ticket);ticket票据由直播云服务器提供给第三方服务器;
+ /**
+ *如果需要回调使用下面的
+ */
+ ZBInitConfigManager.vertifyToken(context,String , new OnVertifyTokenCallbackListener() {
+            @Override
+            public void onSuccess(ZBApiConfig zbApiConfig) {
+            }
 ```
 ## 开启直播
 1.在开启直播前需要对流信息的一个校验,校验成功后才可以开始直播，接口返回都是在UI线程
@@ -384,8 +392,14 @@ message类型为com.zhiyicx.imsdk.model.Message,[详情查看]()
 ```java
   //主播端
   ZBStreamingClient.getInstance().setOnImListener(ImListener);
+  ZBStreamingClient.getInstance().setOnImStatusListener(this);
+  ZBStreamingClient.getInstance().setOnIMMessageTimeOutListener(this);
   //观众端
   ZBPlayClient.getInstance().setOnImListener(ImListener);
+  ZBPlayClient.getInstance().setOnImStatusListener(this);
+  ZBPlayClient.getInstance().setOnIMMessageTimeOutListener(this);
+  
+  
 ```
 2.2. ImListener接口说明
 ```java
@@ -405,14 +419,28 @@ public interface OnImListener {
     /**
     * 聊天室人数查询回执通知
     */
-    void onMcReceived(ChatRoomContainer chatRoomContainer);
+    void onChatRoomDataCountReceived(ChatRoomDataCount chatRoomDataCount);
    /**
     * 直播间结束通知
     */
-    void onConvrEnd(Conver conver);
+    void onConvrEnd(int cid);
 
 }
+/**
+*消息超时
+*/
+public interface OnIMMessageTimeOutListener {
+    void onMessageTimeout(Message message);
+}
+/**
+*IM的状态监听
+*/
+public interface OnImStatusListener {
 
+    void onConnected();
+
+    void onDisconnect(int code, String reason);
+}
 ```
 
 
