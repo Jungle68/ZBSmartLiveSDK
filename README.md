@@ -31,7 +31,7 @@ ZBSmartLiveSDK 的特色是使用 Android Camera 画面捕获并进行 H.264 硬
 
 SDK 提供了如下类(协议)和方法,点击类目查询详情
 
-> [ZBSmartLiveSDK](http://www.baidu.com) 整个SDK的主入口
+> [ZBSmartLiveSDK](http://www.zhiyicx.com) 整个SDK的主入口
 > 
 > [ZBCloudApiClient]() 智播云通讯管理类
 > 
@@ -43,6 +43,7 @@ SDK 提供了如下类(协议)和方法,点击类目查询详情
 > 
 > [ZBInitConfigManager]() 配置信息管理类
 
+---
 
 ## 快速集成
 1. 将智播核心jar包导入到项目libs文件夹下,并将.so文件加入到main文件夹下面的jniLibs文件夹下
@@ -73,6 +74,7 @@ dependencies {
     compile "com.squareup.okhttp3:okhttp:3.2.0"
 }
 ```
+---
 
 ## 申请Appkey
 1.注册智播云账号，在后台申请获取 ZHIBO_APPID,ZHIBO_APPTOKEN
@@ -108,7 +110,8 @@ dependencies {
     android:value="your token"></meta-data>
 ```
 
-初始化Appkey
+---
+
 ## 初始化SDK
 在应用Applicaiton中的onCreate()方法中进行初始化
 
@@ -116,6 +119,7 @@ dependencies {
 ZBSmartLiveSDK.init(ApplicationContext);
 ```
 
+---
 
 ## 用户认证
 登录智播云进行获取授权.获取到智播云口令后
@@ -131,6 +135,8 @@ Android端需要在<font style="color:red">拿到票据```ticket```后调用以�
             public void onSuccess(ZBApiConfig zbApiConfig) {
             }
 ```
+---
+
 ## 开启直播
 1.在开启直播前需要对流信息的一个校验,校验成功后才可以开始直播，接口返回都是在UI线程
 ```java
@@ -296,6 +302,7 @@ ZBStreamingClient.getInstance().closePlay(new OnCloseStatusListener() {
     }
 });
 ```
+---
 
 ## 观看直播
 1.xml中添加播放器视图
@@ -367,6 +374,7 @@ mRootView.getZBplayClient().startVedio(zBVideoView, vid, new OnVideoStartPlayLis
     }
         });
 ```
+---
 
 ## 聊天
 ### 1. 发送消息
@@ -442,8 +450,58 @@ public interface OnImStatusListener {
     void onDisconnect(int code, String reason);
 }
 ```
+---
 
+## 获取配置信息
+1、获取配置域名；
+```java
+String domain=ZBInitConfigManager.getZBCloundDomain();
+```
+2、票据验证成功后，可以获取用户认证信息；
+```java
+ZBUserAuth zbUserInfo=ZBInitConfigManager.getUserAuth(Context context);
+```
+3、获取除礼物、敏感词词库外的配置信息；
+```java
+ZBApiConfig zbApiConfig=ZBInitConfigManager.getConfig(Context context);
+```
+4、获取礼物配置信息；
+```java
+ZBInitConfigManager.getGiftConfig(new OnGiftConfigCallback() {
+            @Override
+            public void onSuccess(List<ZBGift> data) {
+            
+            }
 
+            @Override
+            public void onFail(String code, String message) {
+             
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+           
+            }
+        });
+```
+5、获取敏感词数据源；
+```java
+ZBInitConfigManager.getFilterWords(BaseApplication.getContext(), new OnFilterWordsConfigCallback() {
+            @Override
+            public void onSuccess(Set<String> data) {
+            }
+
+            @Override()
+            public void onFail(String code, String message) {
+
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                throwable.printStackTrace();
+            }
+        });
+```
 
 ## [智播云通讯文档说明](https://github.com/Jungle68/ZBSmartLiveSDK/wiki/%E6%99%BA%E6%92%AD%E4%BA%91%E9%80%9A%E8%AE%AF%E6%96%87%E6%A1%A3%E8%AF%B4%E6%98%8E)
 
